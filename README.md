@@ -42,13 +42,18 @@ The default configuration expects a momentary button wired between GPIO17 and GN
 
 ## Running
 
-Install Hatch, then run from the repository root:
+Install the Raspberry Pi GPIO packages from apt, then install Hatch and run from the repository root:
+
+```bash
+sudo apt update
+sudo apt install python3-rpi.gpio python3-gpiozero python3-lgpio
+```
 
 ```bash
 hatch run wearable
 ```
 
-The default Hatch script uses `config/wearable.yaml`. Update `imu_sink.endpoint` in that file to match the host receiving IMU messages.
+The default Hatch environment uses Python 3.13 for Raspberry Pi OS Trixie and enables access to system site packages. This lets Debian's Pi-specific GPIO packages satisfy dependencies from the Adafruit/Blinka stack instead of forcing pip to compile RPi.GPIO from PyPI. The default Hatch script uses config/wearable.yaml. Update imu_sink.endpoint in that file to match the host receiving IMU messages.
 
 ## Service Install
 
