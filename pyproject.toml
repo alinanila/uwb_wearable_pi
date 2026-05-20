@@ -8,29 +8,18 @@ version = "0.1.0"
 description = "UWB wearable IMU publisher for stage navigation system"
 requires-python = ">=3.12"
 dependencies = [
-    "pyzmq>=25.0",
-    "pyyaml>=6.0",
-    "adafruit-circuitpython-bno08x>=1.0",
-    "adafruit-blinka>=8.0",
-    "RPi.GPIO>=0.7",
+    "pyzmq",
+    "pyyaml",
+    "adafruit-circuitpython-bno08x",
+    "adafruit-blinka",
+    "RPi.GPIO",
 ]
 
 [project.scripts]
 uwb-wearable = "wearable.main:main"
 
-[tool.hatch.build.targets.wheel]
-packages = ["src/wearable"]
-
 [tool.hatch.envs.default]
-type = "virtual"
+python = "3.12"
 
 [tool.hatch.envs.default.scripts]
 wearable = "uwb-wearable --config config/wearable.yaml"
-
-[tool.hatch.envs.hatch-test]
-dependencies = [
-    "pytest>=8.0",
-]
-
-[[tool.hatch.envs.hatch-test.matrix]]
-python = ["3.12"]
