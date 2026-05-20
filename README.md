@@ -60,5 +60,6 @@ The default Hatch environment uses Python 3.13 for Raspberry Pi OS Trixie and en
 The systemd service assumes the project lives at `/home/localuwb/wearable` and Hatch is installed for the `localuwb` user. Adjust `systemd/uwb-wearable.service` if your install path or user differs.
 
 ```bash
+chmod +x ./systemd/install_services.sh
 sudo ./systemd/install_services.sh
 ```
