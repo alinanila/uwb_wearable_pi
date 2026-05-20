@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 User=localuwb
-WorkingDirectory=/home/localuwb/wearable
+WorkingDirectory=/home/localuwb/uwb_wearable_pi
 ExecStart=/home/localuwb/.local/bin/hatch run uwb-wearable --config config/wearable.yaml
 Restart=always
 RestartSec=2
