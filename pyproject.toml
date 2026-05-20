@@ -12,6 +12,7 @@ dependencies = [
     "pyyaml",
     "adafruit-circuitpython-bno08x",
     "adafruit-blinka",
+    "adafruit-extended-bus",
     "gpiozero",
     "lgpio",
 ]

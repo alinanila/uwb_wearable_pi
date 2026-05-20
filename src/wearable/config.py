@@ -19,6 +19,7 @@ class ImuSinkCfg:
 
 @dataclass(frozen=True)
 class Bno085Cfg:
+    i2c_bus: int | None = None
     fast_interval_ms: int = 10
     slow_interval_ms: int = 200
     motion_gyro_thresh: float = 0.05
@@ -61,7 +62,9 @@ def load_wearable_cfg(path: Path) -> WearableCfg:
     )
 
     bno_in = w.get("bno085", {}) or {}
+    i2c_bus_in = bno_in.get("i2c_bus")
     bno085 = Bno085Cfg(
+        i2c_bus=None if i2c_bus_in is None else int(i2c_bus_in),
         fast_interval_ms=int(bno_in.get("fast_interval_ms", 10)),
         slow_interval_ms=int(bno_in.get("slow_interval_ms", 200)),
         motion_gyro_thresh=float(bno_in.get("motion_gyro_thresh", 0.05)),

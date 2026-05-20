@@ -48,6 +48,7 @@ def main(argv: Optional[list[str]] = None) -> None:
     log.info("initialising wearable device=%s", cfg.device_id)
 
     bno       = Bno085Reader(
+        i2c_bus             = cfg.bno085.i2c_bus,
         fast_interval_ms    = cfg.bno085.fast_interval_ms,
         slow_interval_ms    = cfg.bno085.slow_interval_ms,
         motion_gyro_thresh  = cfg.bno085.motion_gyro_thresh,

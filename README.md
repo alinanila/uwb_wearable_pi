@@ -36,6 +36,30 @@ The app uses Broadcom GPIO numbering. The default button pin is GPIO17 and can b
 
 PS0 and PS1 are pulled low by default, which sets the BNO085 operating mode to I2C.
 
+### I2C Stability
+
+The BNO085 can expose Raspberry Pi I2C clock-stretching issues. Symptoms include debug packets with `UNKNOWN Report Type` and `KeyError` values such as `123` or `124` during startup or reads.
+
+First try changing the hardware I2C baudrate in `/boot/firmware/config.txt` and rebooting:
+
+```text
+dtparam=i2c_arm_baudrate=400000
+```
+
+If hardware I2C is still unreliable, enable a software I2C bus instead:
+
+```text
+dtoverlay=i2c-gpio,bus=8
+```
+
+After rebooting, confirm the bus exists:
+
+```bash
+ls /dev/i2c*
+```
+
+Then set `bno085.i2c_bus: 8` in `config/wearable.yaml`.
+
 ## Button Wiring
 
 The default configuration expects a momentary button wired between GPIO17 and GND. The software enables the internal pull-up resistor through `gpiozero`, so a press pulls the input low.

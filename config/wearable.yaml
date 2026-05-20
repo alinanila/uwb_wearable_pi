@@ -15,6 +15,9 @@ wearable:
   button_pin: 17
 
   bno085:
+    # Leave null for the Pi hardware I2C bus. Set to a bus number, e.g. 8,
+    # when using the i2c-gpio software I2C overlay.
+    i2c_bus: null
     fast_interval_ms: 10
     slow_interval_ms: 200
     motion_gyro_thresh: 0.05
