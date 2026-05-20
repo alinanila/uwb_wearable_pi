@@ -1,39 +1,59 @@
 # Wearable Device for Non-Sighted Stage Navigation
-Wearable aspect of the UWB app. This is the code for the wearable electronics, to be integrated with the [UWB localisation system](https://github.com/alinanila/uwb_app).
 
-Move to FreeRTOS so that can add button interrupts and tasks for haptics.
-Need to find a way to do bluetooth audio on esp.
+Wearable Raspberry Pi application for the UWB stage navigation system. The Pi reads a BNO085 IMU, latches button press events from a GPIO input, and publishes IMU messages over ZeroMQ for the main localisation system.
 
-## System overview
+This project was originally converted from ESP32 firmware. The current target is a Raspberry Pi Zero 2 W.
 
-| Component | Quantity |
-|---|:---:|
-| Raspberry Pi Zero 2 W | 1 |
-| BNO085 9-DoF | 1 |
-| DWM3001CDK | 1 |
+## System Overview
 
-Add wiring diagram and explain what all the things are doing
+| Component | Quantity | Purpose |
+|---|:---:|---|
+| Raspberry Pi Zero 2 W | 1 | Runs the wearable publisher |
+| BNO085 9-DoF IMU | 1 | Orientation, acceleration, gyro, step and stability data |
+| Momentary button | 1 | Performer input, reported in IMU messages |
+| DWM3001CDK | 1 | UWB tag, powered alongside the Pi |
 
-### Raspberry Pi Zer 2 W
+## Raspberry Pi Zero 2 W
 
-Controller for sensors on the performer.
+Enable I2C before running the app:
 
-Include pinout.
+```bash
+sudo raspi-config
+```
 
-### BNO085 (I2C) - 9-DoF Inertial Measurement Unit
-| BNO085 Pin |ESP Pin | Description |
-|:---:|:---:|:---:|
-| VIN | 3V | 3.3V power |
+Use `Interface Options > I2C > Enable`, then reboot if prompted.
+
+The app uses Broadcom GPIO numbering. The default button pin is GPIO17 and can be changed in `config/wearable.yaml`.
+
+## BNO085 Wiring
+
+| BNO085 Pin | Raspberry Pi Pin | Description |
+|:---:|:---:|---|
+| VIN | 3V3 | 3.3 V power |
 | GND | GND | Ground |
-| SDA | SDA | I2C data |
-| SCL | SCL| I2C clock|
+| SDA | GPIO2 / SDA1 | I2C data |
+| SCL | GPIO3 / SCL1 | I2C clock |
 
-PS0 and PS1 are pulled low by default, this sets the operating mode to I2C
+PS0 and PS1 are pulled low by default, which sets the BNO085 operating mode to I2C.
 
-### DWM3001CDK - UWB Tag
+## Button Wiring
 
-More information on the tag in the other repo, only here for power.
+The default configuration expects a momentary button wired between GPIO17 and GND. The software enables the internal pull-up resistor through `gpiozero`, so a press pulls the input low.
 
-### Sam's board
+## Running
 
-Need to actually look at her repo and work out how I could connect to this with the esp.
+Install Hatch, then run from the repository root:
+
+```bash
+hatch run wearable
+```
+
+The default Hatch script uses `config/wearable.yaml`. Update `imu_sink.endpoint` in that file to match the host receiving IMU messages.
+
+## Service Install
+
+The systemd service assumes the project lives at `/home/localuwb/wearable` and Hatch is installed for the `localuwb` user. Adjust `systemd/uwb-wearable.service` if your install path or user differs.
+
+```bash
+sudo ./systemd/install_services.sh
+```

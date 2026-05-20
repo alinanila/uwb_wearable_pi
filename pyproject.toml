@@ -12,7 +12,8 @@ dependencies = [
     "pyyaml",
     "adafruit-circuitpython-bno08x",
     "adafruit-blinka",
-    "RPi.GPIO",
+    "gpiozero",
+    "lgpio",
 ]
 
 [project.scripts]
