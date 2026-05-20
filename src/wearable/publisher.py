@@ -43,7 +43,7 @@ class ImuPublisher:
 
     def publish(self, data: BnoData, button_pressed: bool) -> None:
         event: dict[str, object] = {
-            "schema":         "uwb.imu",
+            "schema":         "uwb.sensors",
             "schema_version": 1,
             "timestamp":      time.time(),
             "device_id":      self._cfg.device_id,

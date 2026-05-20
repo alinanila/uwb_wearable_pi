@@ -10,9 +10,9 @@ import yaml
 @dataclass(frozen=True)
 class ImuSinkCfg:
     enabled: bool = True
-    endpoint: str = "tcp://192.168.x.x:5572"
+    endpoint: str = "tcp://127.0.0.1:5572"
     bind: bool = False
-    topic: str = "imu"
+    topic: str = "sensors"
     sndhwm: int = 32
     linger_ms: int = 0
 
@@ -54,7 +54,7 @@ def load_wearable_cfg(path: Path) -> WearableCfg:
     imu_in = w.get("imu_sink", {}) or {}
     imu_sink = ImuSinkCfg(
         enabled=bool(imu_in.get("enabled", True)),
-        endpoint=str(imu_in.get("endpoint", "tcp://192.168.x.x:5572")),
+        endpoint=str(imu_in.get("endpoint", "tcp://127.0.0.1:5572")),
         bind=bool(imu_in.get("bind", False)),
         topic=str(imu_in.get("topic", "imu")),
         sndhwm=int(imu_in.get("sndhwm", 32)),
