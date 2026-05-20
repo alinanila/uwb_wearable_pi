@@ -92,7 +92,7 @@ class Bno085Reader:
                 BNO_REPORT_GAME_ROTATION_VECTOR,
                 BNO_REPORT_LINEAR_ACCELERATION,
                 BNO_REPORT_ACCELEROMETER,
-                BNO_REPORT_GYROSCOPE_CALIBRATED,
+                BNO_REPORT_GYROSCOPE,
                 BNO_REPORT_GRAVITY,
                 BNO_REPORT_STEP_COUNTER,
                 BNO_REPORT_STABILITY_CLASSIFIER,
@@ -106,7 +106,7 @@ class Bno085Reader:
             self._bno.enable_feature(BNO_REPORT_GAME_ROTATION_VECTOR)
             self._bno.enable_feature(BNO_REPORT_LINEAR_ACCELERATION)
             self._bno.enable_feature(BNO_REPORT_ACCELEROMETER)
-            self._bno.enable_feature(BNO_REPORT_GYROSCOPE_CALIBRATED)
+            self._bno.enable_feature(BNO_REPORT_GYROSCOPE)
             self._bno.enable_feature(BNO_REPORT_GRAVITY)
             self._bno.enable_feature(BNO_REPORT_STEP_COUNTER)
             self._bno.enable_feature(BNO_REPORT_STABILITY_CLASSIFIER)
@@ -185,3 +185,4 @@ class Bno085Reader:
             log.warning("BNO085 read error: %s", e)
 
         return data
+    
