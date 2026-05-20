@@ -1,0 +1,14 @@
+[Unit]
+Description=UWB Wearable IMU Publisher
+After=network.target
+
+[Service]
+User=localuwb
+WorkingDirectory=/home/localuwb/wearable
+ExecStart=/home/localuwb/.local/bin/hatch run uwb-wearable --config config/wearable.yaml
+Restart=always
+RestartSec=2
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

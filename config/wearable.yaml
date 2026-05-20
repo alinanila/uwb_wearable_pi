@@ -1,0 +1,22 @@
+wearable:
+  enabled: true
+  device_id: "PERFORMER"
+  publish_rate_hz: 20.0
+  console: true
+
+  imu_sink:
+    enabled: true
+    endpoint: "tcp://192.168.8.104:5572"
+    bind: false
+    topic: "imu"
+    sndhwm: 32
+    linger_ms: 0
+
+  button_pin: 17
+
+  bno085:
+    fast_interval_ms: 10
+    slow_interval_ms: 200
+    motion_gyro_thresh: 0.05
+    motion_linacc_thresh: 0.08
+    motion_hold_frames: 10
